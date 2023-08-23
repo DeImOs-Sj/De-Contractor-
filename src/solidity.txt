@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MultiSignatureBillValidation {
+    address public owner1;
+    address public owner2;
+    address public owner3;
+
+    struct Bill {
+        string billData;
+        bool isApprovedByOwner1;
+        bool isApprovedByOwner2;
+        bool isApprovedByOwner3;
+    }
+
+    mapping(address => bool) public isOwner;
+
+    mapping(uint256 => Bill) public bills;
+    uint256 public billCount;
+
+    constructor(address _owner2, address _owner3) {
+        owner1 = msg.sender;
+        owner2 = _owner2;
+        owner3 = _owner3;
+
+        isOwner[owner1] = true;
+        isOwner[owner2] = true;
+        isOwner[owner3] = true;
+    }
+
+    modifier onlyOwner() {
+        require(isOwner[msg.sender], "Not an owner");
+        _;
+    }
+
+    function uploadBill(string memory _billData) public onlyOwner {
+        uint256 billId = billCount++;
+        bills[billId] = Bill({
+            billData: _billData,
+            isApprovedByOwner1: false,
+            isApprovedByOwner2: false,
+            isApprovedByOwner3: false
+        });
+    }
+
+    function approveBill(uint256 _billId) public onlyOwner {
+        require(_billId < billCount, "Invalid bill ID");
+
+        Bill storage bill = bills[_billId];
+        if (msg.sender == owner1) {
+            bill.isApprovedByOwner1 = true;
+        } else if (msg.sender == owner2) {
+            bill.isApprovedByOwner2 = true;
+        } else if (msg.sender == owner3) {
+            bill.isApprovedByOwner3 = true;
+        }
+    }
+
+    function isBillApproved(uint256 _billId) public view returns (bool) {
+        require(_billId < billCount, "Invalid bill ID");
+
+        Bill storage bill = bills[_billId];
+        return bill.isApprovedByOwner1 && bill.isApprovedByOwner2 && bill.isApprovedByOwner3;
+    }
+}

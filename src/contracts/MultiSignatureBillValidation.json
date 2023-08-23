@@ -1,0 +1,123 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_billId",
+                "type": "uint256"
+            }
+        ],
+        "name": "approveBill",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_billId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_billData",
+                "type": "string"
+            },
+            {
+                "internalType": "address[]",
+                "name": "_initialOwners",
+                "type": "address[]"
+            }
+        ],
+        "name": "uploadBill",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "billCount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "bills",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "billData",
+                "type": "string"
+            },
+            {
+                "internalType": "uint8",
+                "name": "maxOwners",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_billId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            }
+        ],
+        "name": "getApprovalStatus",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_billId",
+                "type": "uint256"
+            }
+        ],
+        "name": "isBillApproved",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
