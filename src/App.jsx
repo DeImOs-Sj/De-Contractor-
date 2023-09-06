@@ -6,6 +6,7 @@ import UploadBill from './components/UploadBill';
 import CheckApprovalStatus from './components/CheckApprovalStatus';
 import ApproveBill from './components/ApproveBill';
 import Bills from './components/Bills';
+import HomePage from './components/HomePage';
 
 function App() {
   const [contract, setContract] = useState(null);
@@ -25,7 +26,7 @@ function App() {
       await requestAccount();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner(); // Get the signer (usually from MetaMask)
-      const contractAddress = '0x0c8f42Fd6B5F00Fd599FFe01F35F8A28Dd06659D';
+      const contractAddress = '0x3aA18E73dB61eA00995be310052C76C62db59773';
 
       const multisigContract = new ethers.Contract(contractAddress, contractAbi, signer);
 
@@ -36,7 +37,8 @@ function App() {
   };
 
   const handleUpload = async () => {
-    // ... (existing code)
+    const billId = 0; // Define and initialize billId here
+
     try {
       await contract.uploadBill(billId, billData, parsedInitialOwners);
       console.log('Bill uploaded successfully.');
@@ -51,6 +53,9 @@ function App() {
     <>
       <NavBar setActivePage={setActivePage} />
       <div className="flex justify-center items-center h-screen">
+        {activePage === 'home' && (
+          <HomePage contract={contract} onUpload={handleUpload} />
+        )}
         {activePage === 'upload' && (
           <UploadBill contract={contract} onUpload={handleUpload} />
         )}
@@ -61,7 +66,7 @@ function App() {
           <ApproveBill contract={contract} onApprove={() => setActivePage('')} />
         )}
         {activePage === 'bills' && (
-          <Bills bills={bills} />
+          <Bills contract={contract} />
         )}
       </div>
     </>
